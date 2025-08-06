@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  ball-game:
+    build: .
+    container_name: ball-game
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      # Для Linux: монтируем X11 сокет
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      # Для Windows: используем X11 сервер
+      - ${HOME}/.Xauthority:/home/gameuser/.Xauthority:rw
+    network_mode: host
+    stdin_open: true
+    tty: true
+    # Для запуска в фоновом режиме с виртуальным дисплеем
+    command: /app/start.sh 
